@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources;
 
+use App\Enums\UserRole;
 use App\Filament\Resources\UserResource\Pages;
 use App\Models\User;
 use Filament\Forms;
@@ -64,8 +65,8 @@ class UserResource extends Resource
 				Tables\Columns\TextColumn::make('name')
 					->sortable(),
 
-				Tables\Columns\TextColumn::make('is_shop')->label('Role')
-					->formatStateUsing(fn($state): string => $state ? 'Shop' : 'Admin'),
+				Tables\Columns\TextColumn::make('role')->label('Role')
+					->formatStateUsing(fn($state): string => UserRole::get_label($state)),
 
 				Tables\Columns\TextColumn::make('shop_url')->label('Shop URL')
 					->url(fn(User $record) => "https://{$record->shop_url}")
@@ -80,12 +81,9 @@ class UserResource extends Resource
 					->sortable(),
 			])
 			->filters([
-				SelectFilter::make('is_shop')->label('Role')
-					->options([
-						true => 'Shop',
-						false => 'Admin',
-					])
-					->default(true),
+				SelectFilter::make('role')->label('Role')
+					->options(UserRole::options())
+					->default(UserRole::Shop->value),
 			])
 			->actions([
 				Tables\Actions\ActionGroup::make([

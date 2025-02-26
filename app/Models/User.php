@@ -2,13 +2,16 @@
 
 namespace App\Models;
 
+use App\Enums\UserRole;
 use Filament\Panel;
 use Filament\Models\Contracts\FilamentUser;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Str;
 use Stripe\StripeClient;
 
-class User extends Authenticatable implements FilamentUser
+class User extends Authenticatable implements FilamentUser, MustVerifyEmail
 {
 	use Notifiable;
 
@@ -24,7 +27,7 @@ class User extends Authenticatable implements FilamentUser
 
 	public function canAccessPanel(Panel $panel): bool
 	{
-		return true;
+		return str::lower(UserRole::get_label($this->role)) == $panel->getId();
 	}
 
 	public function order_requests()

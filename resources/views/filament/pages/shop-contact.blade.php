@@ -9,7 +9,7 @@
 				Save Settings
 			</x-filament::button>
 
-			<x-filament::button tag="a" color="gray" href="{{ secure_url('/admin') }}">
+			<x-filament::button tag="a" color="gray" href="{{ secure_url('/shop') }}">
 				Cancel
 			</x-filament::button>
 		</div>

@@ -2,6 +2,7 @@
 
 namespace App\Models\Scopes;
 
+use App\Enums\UserRole;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Scope;
@@ -18,7 +19,7 @@ class UserScope implements Scope
 	 */
 	public function apply(Builder $builder, Model $model): void
 	{
-		if (($user = Auth::user()) && $user->is_shop) {
+		if (($user = Auth::user()) && $user->role == UserRole::Shop->value) {
 			$builder->where('user_id', $user->id);
 		}
 	}

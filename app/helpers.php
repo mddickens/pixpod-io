@@ -1,7 +1,7 @@
 <?php
 
+use App\Enums\UserRole;
 use App\Models\CountryCode;
-use App\Models\PayMethod;
 use Filament\Notifications\Notification;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -24,14 +24,14 @@ if (!function_exists('o2a')) {
 if (!function_exists('is_shop')) {
 	function is_shop()
 	{
-		return Auth::user()->is_shop;
+		return Auth::user()->role == UserRole::Shop->value;
 	}
 }
 
 if (!function_exists('is_admin')) {
 	function is_admin()
 	{
-		return !Auth::user()->is_shop;
+		return Auth::user()->role == UserRole::Admin->value;
 	}
 }
 

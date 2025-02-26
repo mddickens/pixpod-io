@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\UserRole;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -13,29 +14,11 @@ return new class extends Migration
 	{
 		Schema::create('users', function (Blueprint $table) {
 			$table->id();
+			$table->unsignedTinyInteger('role')->default(UserRole::Shop->value);
 			$table->string('name');
 			$table->string('email')->unique();
 			$table->string('password');
-			$table->string('stripe_id')->nullable();
-			$table->string('shop_url')->nullable()->unique();
-			$table->string('company_name')->nullable();
-			$table->string('contact_name')->nullable();
-			$table->string('contact_phone')->nullable();
-			$table->string('contact_email')->nullable();
-			$table->string('accounting_name')->nullable();
-			$table->string('accounting_email')->nullable();
-			$table->string('customer_service_phone')->nullable();
-			$table->string('customer_service_email')->nullable();
-			$table->string('address_1')->nullable();
-			$table->string('address_2')->nullable();
-			$table->string('city')->nullable();
-			$table->string('state_province')->nullable();
-			$table->string('postal_code')->nullable();
-			$table->string('country')->nullable();
-			$table->string('fedex_account')->nullable();
-			$table->string('ups_account')->nullable();
 			$table->timestamp('email_verified_at')->nullable();
-			$table->char('uid', 13)->nullable()->unique();
 			$table->rememberToken();
 			$table->timestamps();
 		});
